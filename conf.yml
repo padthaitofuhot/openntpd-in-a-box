@@ -1,0 +1,34 @@
+# Configuration overrides
+#
+# You can override anything you see in the "conf:" tree in box/box.yml here!
+# Additionally, there are a few properties you can set here that do not have
+# defaults in box.yml that you may find useful.
+#
+# APK REPOS
+# Uncomment to use your favorite APK mirror
+# Only add the URL pointing the mirror root, everything else is added automatically!
+# For example, if you set the following:
+#alpine_mirror: http://192.168.1.2/alpine
+# it will resolve to:
+# http://192.168.1.2/alpine/v3.3/{main,community}
+# -AND-
+# http://192.168.1.2/alpine/edge/{main,community,testing}
+#
+# UPSTREAM NTP SERVERS
+# If you don't want to or can't use pool.ntp.org, you can set upstream NTP servers here.
+# Note the syntax difference between "servers" for DNS round-robins and "server" for
+# hosts that resolve to a single A record.
+# upstream_1: servers 0.pool.ntp.org
+# upstream_2: servers 1.pool.ntp.org weight 5
+# upstream_1: server 1.my.private.server
+# upstream_2: server 2.my.private.server weight 3
+# upstream_3: server 3.my.private.server weight 6
+# upstream_4: server 4.my.private.server weight 9
+#
+# TIME CONSTRAINT SOURCE
+# OpenNTPD allows a form of time "fact-checking" by querying an HTTPS server
+# to help constrain time drift in the event your time servers are all messed
+# up or under MitM attack.
+# Set this to an HTTPS server with reliable time. Google is the default.
+# If you can't query Google, set this to something with reliable time that you can query.
+#constraints_from: "https://www.google.com/?q=openntpd"

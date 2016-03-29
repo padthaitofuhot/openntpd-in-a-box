@@ -1,0 +1,34 @@
+name: openntpd
+home: /opt/openntpd
+subdirs: db run
+conf: ntpd.conf
+
+conf:
+# Sane configuration defaults go here.
+# Anything in this section can be overridden by conf.yml!
+  upstream_1: "servers 0.pool.ntp.org"
+  upstream_2: "servers 1.pool.ntp.org weight 5"
+  upstream_3: "#servers 2.pool.ntp.org weight 10"
+  upstream_4: "#servers 3.pool.ntp.org weight 15"
+# Set this to an HTTPS server with reliable time. Google is a good default.
+  constraints_from: "https://www.google.com/?q=openntpd"
+
+build:
+  alpine_version: 3.3
+  alpine_mirror: http://dl-cdn.alpinelinux.org/alpine
+  packages: openntpd
+  expose: 123 123/udp
+  entrypoint: /usr/sbin/ntpd -f/opt/ntpd.conf
+  cmd: -d -s
+
+run:
+# Sane docker run defaults go here.
+# Anything in this section can be overridden by run.yml!
+  console:
+  persist: -d
+  net: --net=host
+  capabilities: --cap-add SYS_TIME
+  restart: --restart=always
+  ports: "-p 0.0.0.0:123:123/tcp -p 0.0.0.0:123:123/udp"
+  volumes: -v /opt/openntpd/db:/var/db -v /opt/openntpd/run:/var/run
+  logging: --log-driver=syslog --log-opt tag=ntpd
